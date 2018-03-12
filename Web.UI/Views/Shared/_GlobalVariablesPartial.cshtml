@@ -1,0 +1,27 @@
+﻿@using TopTal.JoggingApp.Resources;
+
+<script type="text/javascript">
+
+@{
+    var controller = ViewBag.ActiveController;
+
+    @Html.Raw(string.Format("var globals = {{}};{0}", Environment.NewLine));
+    @Html.Raw(string.Format("globals.isDebugging = {0};{1}", controller.IsDebugging ? "true" : "false", Environment.NewLine));
+    @Html.Raw(string.Format("globals.gridPageSize = {0};{1}", controller.AppConfig.WebApplication.GridPageSize, Environment.NewLine));
+    @Html.Raw(string.Format("globals.productTitle = '{0}';{1}", controller.AppConfig.ProductInfo.Title.Replace("'", "\'"), Environment.NewLine));
+    @Html.Raw(string.Format("globals.applicationPath = '{0}';{1}", controller.ApplicationPath, Environment.NewLine));
+    @Html.Raw(string.Format("globals.rootPath = '{0}';{1}", controller.RootPath, Environment.NewLine));
+
+    // Resources
+
+    @Html.Raw(string.Format("globals.resources = {{{0}", Environment.NewLine));
+    @Html.Raw(string.Format("Security_Unauthenticated: '{0}',{1}", Resources.Security_Unauthenticated.Replace("'", "\\'"), Environment.NewLine));
+    @Html.Raw(string.Format("Security_Unauthorized: '{0}',{1}", Resources.Security_Unauthorized.Replace("'", "\\'"), Environment.NewLine));
+    @Html.Raw(string.Format("Validation_MandatoryFieldsAreMissing: '{0}',{1}", Resources.Validation_MandatoryFieldsAreMissing.Replace("'", "\\'"), Environment.NewLine));
+    @Html.Raw(string.Format("}};{0}", Environment.NewLine));
+
+    // This is an anti-pattern. One should return global parameters via the GlobalParametersService.
+    @Html.Raw(string.Format("document.globals = globals;{0}", Environment.NewLine));
+
+    }
+</script>

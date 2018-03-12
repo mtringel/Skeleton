@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<div class="row">
+    <div class="col-md-3">
+        <img src="@ViewData["Picture"]" style="border-radius: 50%; height: 200px; width: 200px; margin: 20px;" />
+    </div>
+    <div class="col-md-9">
+        <pre>@ViewData["Response"]</pre>
+    </div>
+</div>

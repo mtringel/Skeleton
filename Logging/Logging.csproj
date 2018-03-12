@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>TopTal.JoggingApp.Logging</AssemblyName>
+    <RootNamespace>TopTal.JoggingApp.Logging</RootNamespace>
+  </PropertyGroup>
+
+</Project>
