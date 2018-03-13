@@ -20,16 +20,10 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
 
         public string Instance { get; set; }
 
-        //public string Domain { get; set; }
-
-        //public string TenantId { get; set; }
-
         public string CallbackPath { get; set; }
-
-        public string Scopes { get; set; }
 
         public string GraphResourceId { get; set; }
 
-        public string GraphScopes { get; set; }
+        public string GraphVersion { get; set; }
     }
 }

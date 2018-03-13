@@ -69,8 +69,8 @@ namespace TopTal.JoggingApp.Azure.Extensions
                 options.ResponseMode = "form_post";
                 options.SaveTokens = true;
 
-                var allScopes = $"{_azureOptions.Scopes} {_azureOptions.GraphScopes}".Split(new[] { ' ' });
-                foreach (var scope in allScopes) { options.Scope.Add(scope); }
+                //var allScopes = $"{_azureOptions.Scopes} {_azureOptions.GraphScopes}".Split(new[] { ' ' });
+                //foreach (var scope in allScopes) { options.Scope.Add(scope); }
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

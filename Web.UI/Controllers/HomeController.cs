@@ -15,15 +15,11 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
         public HomeController(
             CallContext.ICallContext callContext,
             Security.Managers.IAuthProvider authProvider,
-            Configuration.AppConfig appConfig,
-            GraphClient graphClient
+            Configuration.AppConfig appConfig
             )
             : base(callContext, authProvider, appConfig)
         {
-            this.GraphClient = graphClient;
         }
-
-        private GraphClient GraphClient;
 
         public IActionResult Index()
         {
@@ -36,7 +32,8 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
 
             try
             {
-                var result = GraphClient.GetAllUsers(null).Result;
+                var graph = new GraphClient(AppConfig, "3a9d8c99-f7d8-4418-a7de-1f864008974a");
+                var result = graph.GetAllUsers(null).Result;
                 var objId = this.AuthProvider.CurrentUser.ObjectId;
                 //var result = B2CGraphClient.GetUserByObjectId(objId).Result;
                 ViewData["Response"] = result;

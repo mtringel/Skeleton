@@ -10,7 +10,6 @@ namespace TopTal.JoggingApp.Azure
     {
         public static void ConfigureServices(IServiceCollection services, AppConfig appConfig)
         {
-            services.AddTransient(typeof(GraphClient));
         }
     }
 }

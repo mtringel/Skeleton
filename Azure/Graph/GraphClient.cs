@@ -26,14 +26,16 @@ namespace TopTal.JoggingApp.Azure
 
         private AppConfig AppConfig;
 
-        public GraphClient(AppConfig appConfig)
+        private string TenantId;
+
+        public GraphClient(AppConfig appConfig, string tenantId)
         {
             this.AppConfig = appConfig;
+            this.TenantId = tenantId.Trim('/');
 
             // The client_id, client_secret, and tenant are pulled in from the App.config file
             // The AuthenticationContext is ADAL's primary class, in which you indicate the direcotry to use.
-            var tenant = "3a9d8c99-f7d8-4418-a7de-1f864008974a";
-            this.authContext = new AuthenticationContext("https://login.microsoftonline.com/" + tenant);
+            this.authContext = new AuthenticationContext($"https://login.microsoftonline.com/{TenantId}");
 
             // The ClientCredential is where you pass in your client_id and client_secret, which are 
             // provided to Azure AD in order to receive an access_token using the app's identity.
@@ -49,6 +51,8 @@ namespace TopTal.JoggingApp.Azure
         {
             return await SendGraphGetRequest("/users", query);
         }
+
+        #region Not used
 
         //public async Task<string> CreateUser(string json)
         //{
@@ -75,15 +79,15 @@ namespace TopTal.JoggingApp.Azure
         //    return await SendGraphDeleteRequest("/applications/" + appObjectId + "/extensionProperties/" + extensionObjectId);
         //}
 
-        public async Task<string> GetExtensions(string appObjectId)
-        {
-            return await SendGraphGetRequest("/applications/" + appObjectId + "/extensionProperties", null);
-        }
+        //public async Task<string> GetExtensions(string appObjectId)
+        //{
+        //    return await SendGraphGetRequest("/applications/" + appObjectId + "/extensionProperties", null);
+        //}
 
-        public async Task<string> GetApplications(string query)
-        {
-            return await SendGraphGetRequest("/applications", query);
-        }
+        //public async Task<string> GetApplications(string query)
+        //{
+        //    return await SendGraphGetRequest("/applications", query);
+        //}
 
         //private async Task<string> SendGraphDeleteRequest(string api)
         //{
@@ -182,20 +186,25 @@ namespace TopTal.JoggingApp.Azure
         //    return await response.Content.ReadAsStringAsync();
         //}
 
-        public async Task<string> SendGraphGetRequest(string api, string query)
+        #endregion
+
+        private async Task<string> SendGraphGetRequest(string api, string query)
         {
             // First, use ADAL to acquire a token using the app's identity (the credential)
             // The first parameter is the resource we want an access_token for; in this case, the Graph API.
-            AuthenticationResult result = authContext.AcquireTokenAsync("https://graph.windows.net", credential).Result;
+            AuthenticationResult result = authContext.AcquireTokenAsync(AppConfig.AzureAdOptions.GraphResourceId, credential).Result;
             
             // For B2C user managment, be sure to use the 1.6 Graph API version.
             HttpClient http = new HttpClient();
-            var tenant = "3a9d8c99-f7d8-4418-a7de-1f864008974a";
-            string url = "https://graph.windows.net/" + tenant + api + "?api-version=1.6";
-            if (!string.IsNullOrEmpty(query))
-            {
-                url += "&" + query;
-            } 
+
+            string url = string.Format("{0}/{1}/{2}?{3}{4}{5}",
+                AppConfig.AzureAdOptions.GraphResourceId.TrimEnd('/'),
+                TenantId,
+                api.Trim('/'),
+                AppConfig.AzureAdOptions.GraphVersion,
+                !string.IsNullOrEmpty(query) ? "&" : "",
+                query
+                );
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("GET " + url);
