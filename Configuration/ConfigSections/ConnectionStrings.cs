@@ -11,7 +11,7 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
     public sealed class ConnectionStrings : ConfigSection
     {
         internal ConnectionStrings(IConfiguration configuration)
-            : base(configuration.GetSection("ConnectionStrings"))
+            : base(configuration, configuration.GetSection("ConnectionStrings"))
         {
         }
 

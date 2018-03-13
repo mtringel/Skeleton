@@ -11,7 +11,7 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
     public sealed class ProductInfo : ConfigSection
     {
         internal ProductInfo(IConfiguration configuration)
-            : base(configuration.GetSection("ProductInfo"))
+            : base(configuration, configuration.GetSection("ProductInfo"))
         {
         }
 

@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-AAD_AuthTest_MultiTenant-CDC4524F-9F72-4C1D-B9C0-CEE194A1F62E</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
-    <AssemblyName>ExxonMobile.Skeleton.Web.UI</AssemblyName>
-    <RootNamespace>ExxonMobile.Skeleton.Web.UI</RootNamespace>
+    <AssemblyName>Nekosoft.AzureSkeleton.Web.UI</AssemblyName>
+    <RootNamespace>Nekosoft.AzureSkeleton.Web.UI</RootNamespace>
     <ApplicationInsightsResourceId>/subscriptions/7e019d05-2ae5-4b53-8ac6-164aac04b39b/resourcegroups/default-resource-group/providers/microsoft.insights/components/AzureSkeleton Telemetry</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/7e019d05-2ae5-4b53-8ac6-164aac04b39b/resourcegroups/default-resource-group/providers/microsoft.insights/components/AzureSkeleton Telemetry</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>

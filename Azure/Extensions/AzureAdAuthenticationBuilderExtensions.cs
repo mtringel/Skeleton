@@ -1,13 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Identity.Client;
-using TopTal.JoggingApp.Azure.Principals;
 using TopTal.JoggingApp.Configuration;
 
 namespace TopTal.JoggingApp.Azure.Extensions
@@ -18,40 +13,17 @@ namespace TopTal.JoggingApp.Azure.Extensions
     /// 
     /// Additional info:
     /// https://forums.asp.net/t/2125981.aspx?Having+issue+with+my+Microsoft+Identity+Client+ConfidentialClientApplication+object+having+empty+Users+property
+    /// 
+    /// [mtringel] Simplified, added AppConfig
     /// </summary>
     public static class AzureAdAuthenticationBuilderExtensions
     {
-        // [mtringel]
-        //public static AuthenticationBuilder AddAzureAd(this AuthenticationBuilder builder)
-        //    => builder.AddAzureAd(_ => { });
-
-        public static AuthenticationBuilder AddAzureAd(this AuthenticationBuilder builder) // , Action<AzureAdOptions> configureOptions)
+        public static AuthenticationBuilder AddAzureAd(this AuthenticationBuilder builder, AppConfig appConfig)
         {
-            //builder.Services.Configure(configureOptions);
-            builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, ConfigureAzureOptions>();
-            builder.AddOpenIdConnect();
-            return builder;
-        }
-
-        public class ConfigureAzureOptions: IConfigureNamedOptions<OpenIdConnectOptions>
-        {
-            // [mtringel]
-            //private readonly AzureAdOptions _azureOptions;
-            //public AzureAdOptions GetAzureAdOptions() => _azureOptions;
-
-            public ConfigureAzureOptions(AppConfig appConfig) // IOptions<AzureAdOptions> azureOptions)
+            return builder.AddOpenIdConnect(options =>
             {
-                // [mtringel]
-                //_azureOptions = azureOptions.Value;
-                this.AppConfig = appConfig;
-            }
 
-            private AppConfig AppConfig;
-
-            public void Configure(string name, OpenIdConnectOptions options)
-            {
-                // [mtringel]
-                var _azureOptions = AppConfig.AzureAdOptions;
+                var _azureOptions = appConfig.AzureAdOptions;
 
                 options.ClientId = _azureOptions.ClientId;
                 options.Authority = _azureOptions.Instance; // [mtringel] $"{_azureOptions.Instance}common/v2.0";
@@ -104,12 +76,7 @@ namespace TopTal.JoggingApp.Azure.Extensions
                     //    return myUserValidationLogic(context.Ticket.Principal);
                     //}
                 };
-            }
-
-            public void Configure(OpenIdConnectOptions options)
-            {
-                Configure(Options.DefaultName, options);
-            }
+            });
         }
     }
 }

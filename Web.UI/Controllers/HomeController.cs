@@ -15,14 +15,27 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
         public HomeController(
             CallContext.ICallContext callContext,
             Security.Managers.IAuthProvider authProvider,
-            Configuration.AppConfig appConfig
+            Configuration.AppConfig appConfig,
+            Microsoft.Extensions.Configuration.IConfiguration configuration
             )
             : base(callContext, authProvider, appConfig)
         {
+            this.Configuration = configuration;
         }
+
+        private Microsoft.Extensions.Configuration.IConfiguration Configuration;
 
         public IActionResult Index()
         {
+            ViewBag.Settings1 = $"Configuration[\"AppDb\"]={Configuration["AppDb"]}";
+            ViewBag.Settings2 = $"Configuration[\"ConnectionStrings.AppDb\"]={Configuration["ConnectionStrings.AppDb"]}";
+            ViewBag.Settings3 = $"Configuration.GetSection(\"ConnectionStrings\")[\"AppDb\"]={Configuration.GetSection("ConnectionStrings")["AppDb"]}";
+            ViewBag.Settings4 = $"Configuration[\"TestSetting\"]={Configuration["TestSetting"]}";
+            ViewBag.Settings5 = $"Configuration.GetSection(\"ServiceApi\")[\"MaximumReturnedRows\"]={Configuration.GetSection("ServiceApi")["MaximumReturnedRows"]}";
+            ViewBag.Settings6 = $"Configuration[\"ServiceApi.MaximumReturnedRows\"]={Configuration["ServiceApi.MaximumReturnedRows"]}";
+            ViewBag.Settings7 = $"AppConfig.ServiceApi.MaximumReturnedRows={AppConfig.ServiceApi.MaximumReturnedRows}";
+            ViewBag.Settings8 = $"AppConfig.ConnectionStrings.AppDb={AppConfig.ConnectionStrings.AppDb}";
+
             return View();            
         }
 

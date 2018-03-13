@@ -4,13 +4,8 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
 {
     public sealed class AzureAdOptions : ConfigSection
     {
-        public AzureAdOptions()
-            : base(null)
-        {
-        }
-
         internal AzureAdOptions(IConfiguration configuration)
-            : base(configuration.GetSection("AzureAd"))
+            : base(configuration, configuration.GetSection("AzureAd"))
         {
         }
 

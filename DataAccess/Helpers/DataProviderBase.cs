@@ -30,24 +30,19 @@ namespace TopTal.JoggingApp.DataAccess.Helpers
 
         #region Meta-data in attributes
 
-        protected string[] GetOrderByFields(Type entityType, string propertyOrFieldName)
+        protected string[] GetOrderByFields(Type entityType, string propertyName)
         {
-            var member = entityType.GetMember(
-                propertyOrFieldName,
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy
-                )
-                .FirstOrDefault();
+            var property = entityType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
 
-            OrderByAttribute attribute;
+            if (property == null)
+                return new[] { propertyName };
 
-            if (member is PropertyInfo)
-                attribute = (member as PropertyInfo).GetCustomAttribute<OrderByAttribute>();
-            else if (member is FieldInfo)
-                attribute = (member as FieldInfo).GetCustomAttribute<OrderByAttribute>();
-            else
-                return new[] { propertyOrFieldName };
+            var attribute = property.GetCustomAttribute<OrderByAttribute>();
 
-            return attribute == null ? new[] { propertyOrFieldName } : attribute.OrderByFields;
+            if (attribute == null)
+                return new[] { propertyName };
+
+            return attribute.OrderByFields;
         }
 
         #endregion

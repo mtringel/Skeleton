@@ -11,7 +11,7 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
     public sealed class WebApplication : ConfigSection
     {
         internal WebApplication(IConfiguration configuration)
-            : base(configuration.GetSection("WebApplication"))
+            : base(configuration, configuration.GetSection("WebApplication"))
         {
         }
 

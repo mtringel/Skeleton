@@ -10,7 +10,7 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
     public sealed class AppDb : ConfigSection
     {
         internal AppDb()
-            : base(null)
+            : base(null, null)
         {
         }
 

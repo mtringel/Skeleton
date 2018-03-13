@@ -11,10 +11,8 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
     public sealed class Logging : ConfigSection
     {
         internal Logging(IConfiguration configuration)
-            : base(configuration.GetSection("Logging"))
+            : base(configuration, configuration.GetSection("Logging"))
         {
         }
-
-        public string EventSource { get; set; }
     }
 }

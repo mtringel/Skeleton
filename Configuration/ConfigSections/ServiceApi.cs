@@ -11,7 +11,7 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
     public sealed class ServiceApi : ConfigSection
     {
         internal ServiceApi(IConfiguration configuration)
-            : base (configuration.GetSection("ServiceApi"))
+            : base (configuration, configuration.GetSection("ServiceApi"))
         {
         }
 

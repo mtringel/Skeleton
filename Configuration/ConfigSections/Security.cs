@@ -11,7 +11,7 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
     public sealed class Security : ConfigSection
     {
         internal Security(IConfiguration configuration)
-            : base(configuration.GetSection("Security"))
+            : base(configuration, configuration.GetSection("Security"))
         {
         }
     

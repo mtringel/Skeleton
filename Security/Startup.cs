@@ -26,7 +26,7 @@ namespace TopTal.JoggingApp.Security
                 sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                 sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddAzureAd() // see Azure.Extensions.AzureAdAuthenticationBuilderExtensions
+            .AddAzureAd(appConfig) // see Azure.Extensions.AzureAdAuthenticationBuilderExtensions
             .AddCookie(options =>
             {
                 // Cookie settings
