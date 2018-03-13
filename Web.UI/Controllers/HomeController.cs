@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TopTal.JoggingApp.Azure;
-using TopTal.JoggingApp.Security.Managers;
+using TopTal.JoggingApp.AzureHelper.Graph;
 using TopTal.JoggingApp.Web.UI.Models;
 
 namespace TopTal.JoggingApp.Web.UI.Controllers

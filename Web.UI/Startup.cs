@@ -37,7 +37,7 @@ namespace TopTal.JoggingApp.Web.UI
             var config = services.BuildServiceProvider().GetService<TopTal.JoggingApp.Configuration.AppConfig>();
 
             // Azure - needs AppConfig
-            TopTal.JoggingApp.Azure.Startup.ConfigureServices(services, config);
+            TopTal.JoggingApp.AzureHelper.Startup.ConfigureServices(services, config);
 
             // Security - needs AppConfig, must be after Azure
             TopTal.JoggingApp.Security.Startup.ConfigureServices(services, config);

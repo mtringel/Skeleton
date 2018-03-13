@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace TopTal.JoggingApp.Azure.Principals
+namespace TopTal.JoggingApp.AzureHelper.Principals
 {
     /// <summary>
     /// We use v1.0 endpoints

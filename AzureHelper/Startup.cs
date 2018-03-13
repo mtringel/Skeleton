@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TopTal.JoggingApp.Configuration;
 
-namespace TopTal.JoggingApp.Azure 
+namespace TopTal.JoggingApp.AzureHelper
 {
     /// <summary>
     /// Register provided services here (services are almost always transient)

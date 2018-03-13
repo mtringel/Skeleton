@@ -8,7 +8,7 @@ namespace TopTal.JoggingApp.Security.Principals
     /// Contains all security information needed for authentication / authorization.
     /// Should not contain information from SQL database, only what we can get from ClaimsIdentity from Azure (to avoid SQL roundtrips at each request).
     /// </summary>
-    public sealed class AppUser : Azure.Principals.ClaimsPrincipal
+    public sealed class AppUser : TopTal.JoggingApp.AzureHelper.Principals.ClaimsPrincipal
     {
         public Group Group { get; private set; }
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>TopTal.JoggingApp.Azure</AssemblyName>
+    <AssemblyName>TopTal.JoggingApp.AzureHelper</AssemblyName>
     <RootNamespace>TopTal.JoggingApp.Azure</RootNamespace>
   </PropertyGroup>
 

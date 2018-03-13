@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using TopTal.JoggingApp.Configuration;
 
-namespace TopTal.JoggingApp.Azure.Authentication
+namespace TopTal.JoggingApp.AzureHelper.Authentication
 {
     /// <summary>
     /// Microsoft Graph Connect Sample for ASP.NET Core 2.0

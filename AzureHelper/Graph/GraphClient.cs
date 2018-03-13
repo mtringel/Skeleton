@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using TopTal.JoggingApp.Configuration;
 
-namespace TopTal.JoggingApp.Azure
+namespace TopTal.JoggingApp.AzureHelper.Graph
 {
     /// <summary>
     /// A Console application for Azure AD B2C User Management the Azure AD Graph

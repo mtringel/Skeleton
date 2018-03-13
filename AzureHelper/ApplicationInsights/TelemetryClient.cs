@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TopTal.JoggingApp.Azure.ApplicationInsights
+namespace TopTal.JoggingApp.AzureHelper.ApplicationInsights
 {
     /// <summary>
     /// Diagnose exceptions in your web apps with Application Insights
