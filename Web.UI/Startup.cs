@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using TopTal.JoggingApp.Exceptions;
 
 namespace TopTal.JoggingApp.Web.UI
@@ -19,7 +12,7 @@ namespace TopTal.JoggingApp.Web.UI
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;            
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -63,13 +56,16 @@ namespace TopTal.JoggingApp.Web.UI
 
             #endregion
 
-            // [mtringel] Anti-forgery token validation
+            #region Anti-forgery token validation
+
             services.AddAntiforgery(options =>
             {
                 options.Cookie.HttpOnly = true;
                 options.Cookie.Expiration = TimeSpan.FromMinutes(config.ServiceApi.AntiForgeryTokenCookieExpiresAfterMinutes);
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
+
+            #endregion  
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -64,7 +64,8 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
         {
             // Test Application Insights failed request
             throw new Exception("Test exception");
-
+            
+            
             ViewData["Message"] = "Your contact page.";
 
             return View();
@@ -74,6 +75,11 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Controls()
+        {
+            return View(); 
         }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using TopTal.JoggingApp.Azure.Extensions;
+using TopTal.JoggingApp.Azure.Authentication;
 using TopTal.JoggingApp.Configuration;
 
 namespace TopTal.JoggingApp.Security 
