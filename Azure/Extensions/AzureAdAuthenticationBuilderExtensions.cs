@@ -18,8 +18,6 @@ namespace TopTal.JoggingApp.Azure.Extensions
     /// 
     /// Additional info:
     /// https://forums.asp.net/t/2125981.aspx?Having+issue+with+my+Microsoft+Identity+Client+ConfidentialClientApplication+object+having+empty+Users+property
-    /// 
-    /// Copyright (c) 2017 Microsoft. All rights reserved.
     /// </summary>
     public static class AzureAdAuthenticationBuilderExtensions
     {

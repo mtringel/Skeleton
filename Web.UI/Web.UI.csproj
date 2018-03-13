@@ -6,13 +6,12 @@
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
     <AssemblyName>ExxonMobile.Skeleton.Web.UI</AssemblyName>
     <RootNamespace>ExxonMobile.Skeleton.Web.UI</RootNamespace>
+    <ApplicationInsightsResourceId>/subscriptions/7e019d05-2ae5-4b53-8ac6-164aac04b39b/resourcegroups/default-resource-group/providers/microsoft.insights/components/AzureSkeleton Telemetry</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/7e019d05-2ae5-4b53-8ac6-164aac04b39b/resourcegroups/default-resource-group/providers/microsoft.insights/components/AzureSkeleton Telemetry</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
 
@@ -39,6 +38,10 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

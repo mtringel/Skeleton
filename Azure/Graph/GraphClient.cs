@@ -15,8 +15,6 @@ namespace TopTal.JoggingApp.Azure
     /// 
     /// From Azure AD Quick Starts
     /// https://github.com/AzureADQuickStarts
-    /// 
-    /// Copyright (c) 2017 Microsoft. All rights reserved.
     /// </summary>
     public sealed class GraphClient
     {

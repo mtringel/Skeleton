@@ -10,6 +10,7 @@ namespace TopTal.JoggingApp.Azure
     {
         public static void ConfigureServices(IServiceCollection services, AppConfig appConfig)
         {
+            services.AddTransient(typeof(Logging.ILogger), typeof(ApplicationInsights.TelemetryClient));
         }
     }
 }

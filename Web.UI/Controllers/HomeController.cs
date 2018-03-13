@@ -28,6 +28,7 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
 
         public IActionResult About()
         {
+            // Test Graph query
             ViewData["Message"] = "Your application description page.";
 
             try
@@ -48,6 +49,9 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
 
         public IActionResult Contact()
         {
+            // Test Application Insights failed request
+            throw new Exception("Test exception");
+
             ViewData["Message"] = "Your contact page.";
 
             return View();

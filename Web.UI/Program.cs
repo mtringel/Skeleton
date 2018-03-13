@@ -19,7 +19,8 @@ namespace TopTal.JoggingApp.Web.UI
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                 // [mtringel] Environment specific appsettings.json
+                .UseApplicationInsights()
+                 // [mtringel] Environment specific appsettings file
                  .ConfigureAppConfiguration((builderContext, config) =>
                  {
                      //IHostingEnvironment env = builderContext.HostingEnvironment;

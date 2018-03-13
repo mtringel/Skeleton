@@ -1,17 +1,28 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using TopTal.JoggingApp.Logging;
 
 namespace TopTal.JoggingApp.Exceptions
 {
     public sealed class ExceptionFilter : IExceptionFilter
     {
-        public void OnException(ExceptionContext context)
+        public ExceptionFilter(ILogger logger)
         {
-            // TODO
+            this.Logger = logger;
+        }
+
+        #region Services
+
+        private ILogger Logger;
+
+        #endregion
+
+        /// <summary>
+        /// Global exception handler
+        /// </summary>
+        public void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext != null && filterContext.Exception != null)
+                Logger.LogError(filterContext.Exception);
         }
     }
 }
