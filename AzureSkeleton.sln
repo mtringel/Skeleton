@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Models", "Service.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CallContext", "CallContext\CallContext.csproj", "{2B7D2ACF-03D1-44BE-BAE6-7BF7FC2C38F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure", "Azure\Azure.csproj", "{C94ED91B-3680-4FD1-940B-8648BFDC59BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureHelper", "AzureHelper\AzureHelper.csproj", "{EBC3DF65-94F7-4687-A8A3-D02F9C59BD99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,10 +89,10 @@ Global
 		{2B7D2ACF-03D1-44BE-BAE6-7BF7FC2C38F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B7D2ACF-03D1-44BE-BAE6-7BF7FC2C38F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B7D2ACF-03D1-44BE-BAE6-7BF7FC2C38F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C94ED91B-3680-4FD1-940B-8648BFDC59BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C94ED91B-3680-4FD1-940B-8648BFDC59BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C94ED91B-3680-4FD1-940B-8648BFDC59BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C94ED91B-3680-4FD1-940B-8648BFDC59BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBC3DF65-94F7-4687-A8A3-D02F9C59BD99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC3DF65-94F7-4687-A8A3-D02F9C59BD99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC3DF65-94F7-4687-A8A3-D02F9C59BD99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC3DF65-94F7-4687-A8A3-D02F9C59BD99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

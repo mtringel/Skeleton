@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Azure\Azure.csproj" />
+    <ProjectReference Include="..\AzureHelper\AzureHelper.csproj" />
     <ProjectReference Include="..\CallContext\CallContext.csproj" />
     <ProjectReference Include="..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\Exceptions\Exceptions.csproj" />
