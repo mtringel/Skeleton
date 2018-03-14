@@ -54,3 +54,26 @@
     </script>
 
 </div>
+
+<h4>VIEWCOMPONENT</h4>
+@await Component.InvokeAsync(typeof(TopTal.JoggingApp.Web.UI.Controllers.Shared.Components.TestViewComponent), new { alma = "43" })
+
+<h4>VIEWCOMPONENT AJAX</h4>
+
+<div class="row" id="container">
+    [CONTAINER]
+</div>
+<div class="row" >
+    <input type="button" onclick="javascript: refreshComponent()" value="Load" />
+</div>
+
+<script type="text/javascript">
+    var container = $("#container");
+
+    var refreshComponent = function () {
+        $.get("/Home/ViewComponent?alma=42", function (data) {            
+            container.html(data);
+        });
+    };
+
+</script>

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TopTal.JoggingApp.AzureHelper.Graph;
+using TopTal.JoggingApp.Web.UI.Controllers.Shared.Components;
 using TopTal.JoggingApp.Web.UI.Models;
 
 namespace TopTal.JoggingApp.Web.UI.Controllers
@@ -70,25 +70,32 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
 
             #region Test Graph API
 
-            // Test Graph query
-            ViewData["Message"] = "Your application description page.";
+            //// Test Graph query
+            //ViewData["Message"] = "Your application description page.";
 
-            try
-            {
-                var graph = new GraphClient(AppConfig, "3a9d8c99-f7d8-4418-a7de-1f864008974a");
-                var result = graph.GetAllUsers(null).Result;
-                var objId = this.AuthProvider.CurrentUser.ObjectId;
-                //var result = B2CGraphClient.GetUserByObjectId(objId).Result;
-                ViewData["Response"] = result;
-            }
-            catch (Exception ex)
-            {
-                ViewData["Response"] = ex.ToString();
-            }
+            //try
+            //{
+            //    var graph = new GraphClient(AppConfig, "3a9d8c99-f7d8-4418-a7de-1f864008974a");
+            //    var result = graph.GetAllUsers(null).Result;
+            //    var objId = this.AuthProvider.CurrentUser.ObjectId;
+            //    //var result = B2CGraphClient.GetUserByObjectId(objId).Result;
+            //    ViewData["Response"] = result;
+            //}
+            //catch (Exception ex)
+            //{
+            //    ViewData["Response"] = ex.ToString();
+            //}
 
             #endregion
 
             return View(); 
+        }
+
+        public new IActionResult ViewComponent(string alma)
+        {
+            var res = ViewComponent(typeof(TestViewComponent), new { alma });
+            return res;
+
         }
     }
 }
