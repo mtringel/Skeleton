@@ -1,7 +1,9 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TopTal.JoggingApp.Exceptions;
@@ -23,6 +25,9 @@ namespace TopTal.JoggingApp.Web.UI
             services.AddMvc(setupAction =>
             {
                 setupAction.Filters.Add(typeof(ExceptionFilter));
+
+                // All endpoints need authentication XXX
+                setupAction.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
             });
 
             // This sample uses an in-memory cache for tokens and subscriptions. Production apps will typically use some method of persistent storage.

@@ -14,7 +14,16 @@ namespace TopTal.JoggingApp.Configuration.ConfigSections
             : base(configuration, configuration.GetSection("Security"))
         {
         }
-    
+
         public int AuthCookieExpirationIntervalMinutes { get; set; }
+
+#if DEBUG
+        /// <summary>
+        /// Skips Azure authentication and impersonate the Admin user silently (for development purposes only)
+        /// See appsettings.development.json / Security / ImpersonateAdminUserInDebugMode for configuration settings
+        /// See TopTal.JoggingApp.AzureHelper.Principals.ClaimsPrincipal.AdminUser() for impersonation details
+        /// </summary>
+        public bool ImpersonateAdminUserInDebugMode { get; set; }
+#endif
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using TopTal.JoggingApp.AzureHelper.Authentication;
 using TopTal.JoggingApp.Configuration;
+using TopTal.JoggingApp.Security.CustomAuthentication;
 
 namespace TopTal.JoggingApp.Security 
 {
@@ -18,25 +19,52 @@ namespace TopTal.JoggingApp.Security
             // Services
             services.AddScoped(typeof(Managers.IAuthProvider), typeof(Managers.AuthProvider));
 
-            // Authentication
-            services.AddAuthentication(sharedOptions =>
+#if DEBUG
+            // Skips Azure authentication and impersonate the Admin user silently (for development purposes only)
+            // See appsettings.development.json / Security / ImpersonateAdminUserInDebugMode for configuration settings
+            // See TopTal.JoggingApp.AzureHelper.Principals.ClaimsPrincipal.AdminUser() for impersonation details
+            if (appConfig.Security.ImpersonateAdminUserInDebugMode)
             {
-                sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-                sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddAzureAd(appConfig) // see Azure.Extensions.AzureAdAuthenticationBuilderExtensions
-            .AddCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromMinutes(appConfig.Security.AuthCookieExpirationIntervalMinutes);
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                // XXX
+                // Add authentication 
+                services.AddAuthentication(options =>
+                    {
+                        options.DefaultAuthenticateScheme = CustomAuthOptions.DefaultScheme;
+                        options.DefaultChallengeScheme = CustomAuthOptions.DefaultScheme;
+                    })
+                    // Call custom authentication extension method
+                    .AddCustomAuth(options =>
+                    {
+                        // Configure password for authentication
+                        options.AuthKey = "custom auth key";
+                    });
 
-                options.SlidingExpiration = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(appConfig.Security.AuthCookieExpirationIntervalMinutes);
-            });
+            }
+            else
+            {
+#endif
+                // Authentication
+                services.AddAuthentication(sharedOptions =>
+                {
+                    sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddAzureAd(appConfig)
+                .AddCookie(options =>
+                {
+                    // Cookie settings
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.Expiration = TimeSpan.FromMinutes(appConfig.Security.AuthCookieExpirationIntervalMinutes);
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(appConfig.Security.AuthCookieExpirationIntervalMinutes);
+                });
+#if DEBUG
+            }
+#endif
         }
     }
 }

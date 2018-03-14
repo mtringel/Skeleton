@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<h4>IDENTITY</h4>
+<div class="row">
+    Identity.Name=@Html.Raw(this.Context.User.Identity.Name)
+</div>
+<h4>APPUSER</h4>
+<div class="row">
+    AppUser.UserId=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.UserId)
+</div>
+<div class="row">
+    AppUser.FirstName=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.FirstName)
+</div>
+<div class="row">
+    AppUser.LastName=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.LastName)
+</div>
+<div class="row">
+    AppUser.FullName=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.FullName)
+</div>
+<div class="row">
+    AppUser.Email=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.Email)
+</div>
+<div class="row">
+    AppUser.TenantId=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.TenantId)
+</div>
+<div class="row">
+    AppUser.ObjectId=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.ObjectId)
+</div>
+<div class="row">
+    AppUser.Group=@Html.Raw(ViewBag.ActiveController.AuthProvider.CurrentUser.Group)
+</div>
+<h4>WINDOWS IDENTITY</h4>
+<div class="row">
+    WindowsIdentity.Name=@Html.Raw(System.Security.Principal.WindowsIdentity.GetCurrent().Name)
+</div>
+
+<h4>GRAPH API</h4>
+<div class="row">
+    <pre>@Html.Raw(ViewBag.Response)</pre>
+</div>
+
+<h4>CONTROLS</h4>
+<div class="row">
+    <input class="datepicker" data-date-format="mm/dd/yyyy">
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: '-3d'
+        });
+    </script>
+
+</div>

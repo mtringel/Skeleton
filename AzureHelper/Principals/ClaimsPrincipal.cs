@@ -17,43 +17,64 @@ namespace TopTal.JoggingApp.AzureHelper.Principals
         public const string ClaimType_SurName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname";
         public const string ClaimType_GivenName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname";
         public const string ClaimType_TenantId = "http://schemas.microsoft.com/identity/claims/tenantid";
-        public const string ClaimType_Name = "http://schemas.microsoft.com/identity/claims/name";
+        public const string ClaimType_UserName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
+        public const string ClaimType_FullName = "name";
         public const string ClaimType_ObjectIdentifier = "http://schemas.microsoft.com/identity/claims/objectidentifier";
-
-        #endregion
-
-        #region Azure v2.0 endpoint (not used)
-
-        //public const string ClaimType_PreferredUserName = "preferred_username";
-        //public const string ClaimType_ObjectIdentifier = "http://schemas.microsoft.com/identity/claims/objectidentifier";
-        //public const string ClaimType_EmailAddress = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress";
-        //public const string ClaimType_TenantId = "http://schemas.microsoft.com/identity/claims/tenantid";
 
         #endregion
 
         public ClaimsPrincipal(System.Security.Claims.ClaimsPrincipal principal)
         {
-            UserId = principal.Identity.Name;
+            UserId = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_UserName)?.Value;
             TenantId = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_TenantId)?.Value;
-            FirstName = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_SurName)?.Value;
-            LastName = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_GivenName)?.Value;
-            FullName = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_Name)?.Value;
+            FirstName = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_GivenName)?.Value;
+            LastName = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_SurName)?.Value;
+#if DEBUG
+            FullName = $"{FirstName} {LastName}";
+#else
+            FullName = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_FullName)?.Value;
+#endif
             Email = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_EmailAddress)?.Value;
             ObjectId = principal.Claims.FirstOrDefault(t => t.Type == ClaimType_ObjectIdentifier)?.Value;
         }
 
-        public string UserId { get; set; }
+#if DEBUG
+        /// <summary>
+        /// Skips Azure authentication and impersonate the Admin user silently (for development purposes only)
+        /// See appsettings.development.json / Security / ImpersonateAdminUserInDebugMode for configuration settings
+        /// See TopTal.JoggingApp.AzureHelper.Principals.ClaimsPrincipal.AdminUser() for impersonation details
+        /// </summary>
+        public static System.Security.Claims.ClaimsPrincipal AdminUser()
+        {
+            return new System.Security.Claims.ClaimsPrincipal(new[]
+            {
+                new System.Security.Claims.ClaimsIdentity(
+                    new System.Security.Principal.GenericIdentity("live.com#nekosoft.bt@gmail.com", "custom auth type"),
+                    new[]{
+                        new System.Security.Claims.Claim(ClaimType_UserName, "live.com#nekosoft.bt@gmail.com"),
+                        new System.Security.Claims.Claim(ClaimType_SurName, "Admin"),
+                        new System.Security.Claims.Claim(ClaimType_GivenName, "Nekosoft"),
+                        //new System.Security.Claims.Claim(ClaimType_FullName, "Nekosoft Admin"), don't set it, names will mix
+                        new System.Security.Claims.Claim(ClaimType_EmailAddress, "nekosoft.bt@gmail.com"),
+                        new System.Security.Claims.Claim(ClaimType_TenantId, "3a9d8c99-f7d8-4418-a7de-1f864008974a"),
+                        new System.Security.Claims.Claim(ClaimType_ObjectIdentifier, "db7da612-5d5a-41eb-8a40-976af2caf7a9")
+                    })
+            });
+        }
+#endif
 
-        public string FirstName { get; set; }
+        public string UserId { get; private set; }
 
-        public string LastName { get; set; }
+        public string FirstName { get; private set; }
 
-        public string FullName { get; set; }
+        public string LastName { get; private set; }
 
-        public string Email { get; set; }
+        public string FullName { get; private set; }
 
-        public string TenantId { get; set; }
+        public string Email { get; private set; }
 
-        public string ObjectId { get; set; }
+        public string TenantId { get; private set; }
+
+        public string ObjectId { get; private set; }
     }
 }

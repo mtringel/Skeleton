@@ -1,24 +1,77 @@
 ﻿// Configure bundling and minification for the project.
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
-  {
-    "outputFileName": "wwwroot/css/site.min.css",
-    // An array of relative input file paths. Globbing patterns supported
-    "inputFiles": [
-      "wwwroot/css/site.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/site.min.js",
-    "inputFiles": [
-      "wwwroot/js/site.js"
-    ],
-    // Optionally specify minification options
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
+    // site.min.css
+    {
+        "outputFileName": "wwwroot/css/site.min.css",
+        // An array of relative input file paths. Globbing patterns supported
+        "inputFiles": [
+            "wwwroot/css/site.css"
+        ],
+        // Optionally specify minification options
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        // Optionally generate .map file
+        "sourceMap": false
     },
-    // Optionally generate .map file
-    "sourceMap": false
-  }
+
+    // site.min.js
+    {
+        "outputFileName": "wwwroot/js/site.min.js",
+        "inputFiles": [
+            "wwwroot/js/site.js"
+        ],
+        // Optionally specify minification options
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        // Optionally generate .map file
+        "sourceMap": false
+    },
+
+    // [mtringel]
+    // https://docs.microsoft.com/hu-hu/aspnet/core/client-side/bundling-and-minification?tabs=visual-studio%2Caspnetcore2x
+
+    // packages.min.css
+    {
+        "outputFileName": "wwwroot/css/packages.min.css",
+        "inputFiles": [
+            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+            "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"
+        ],
+        // Optionally specify minification options
+        "minify": {
+            "enabled": false,
+            "renameLocals": false
+        },
+        // Optionally generate .map file
+        "sourceMap": false
+    },
+
+    // packages.min.js
+    // 
+    {
+        "outputFileName": "wwwroot/js/packages.min.js",
+        "inputFiles": [
+            // order is important!
+            // jquery
+            "node_modules/jquery/dist/jquery.min.js",
+            "node_modules/jquery-validation/dist/jquery.validate.min.js",
+            // popper
+            "node_modules/popper.js/dist/umd/popper.min.js",
+            // bootstrap
+            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+            "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+        ],
+        // Optionally specify minification options
+        "minify": {
+            "enabled": false,
+            "renameLocals": false
+        },
+        // Optionally generate .map file
+        "sourceMap": false
+    }
 ]

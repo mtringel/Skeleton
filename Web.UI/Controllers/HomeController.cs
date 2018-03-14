@@ -25,6 +25,31 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
 
         public IActionResult Index()
         {
+            return View();            
+        }
+
+        public IActionResult About()
+        {           
+            return View();
+        }
+
+        public IActionResult Contact()
+        {                        
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Debug()
+        {
+            #region Test Configuration Settings
+
             ViewBag.Settings1 = $"Configuration[\"AppDb\"]={Configuration["AppDb"]}";
             ViewBag.Settings2 = $"Configuration[\"ConnectionStrings.AppDb\"]={Configuration["ConnectionStrings.AppDb"]}";
             ViewBag.Settings3 = $"Configuration.GetSection(\"ConnectionStrings\")[\"AppDb\"]={Configuration.GetSection("ConnectionStrings")["AppDb"]}";
@@ -34,11 +59,17 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
             ViewBag.Settings7 = $"AppConfig.ServiceApi.MaximumReturnedRows={AppConfig.ServiceApi.MaximumReturnedRows}";
             ViewBag.Settings8 = $"AppConfig.ConnectionStrings.AppDb={AppConfig.ConnectionStrings.AppDb}";
 
-            return View();            
-        }
+            #endregion
 
-        public IActionResult About()
-        {
+            #region Test Exception Logging
+
+            // Test Application Insights failed request
+            //throw new Exception("Test exception");
+
+            #endregion
+
+            #region Test Graph API
+
             // Test Graph query
             ViewData["Message"] = "Your application description page.";
 
@@ -55,28 +86,8 @@ namespace TopTal.JoggingApp.Web.UI.Controllers
                 ViewData["Response"] = ex.ToString();
             }
 
-            return View();
-        }
+            #endregion
 
-        public IActionResult Contact()
-        {
-            // Test Application Insights failed request
-            throw new Exception("Test exception");
-            
-            
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        [AllowAnonymous]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult Controls()
-        {
             return View(); 
         }
     }
