@@ -52,10 +52,7 @@ namespace TopTal.JoggingApp.Security.Managers
         /// <summary>
         /// It's faster than checking CurrentUser (CurrentUser has to retrieve the user entity from the database for the current request)
         /// </summary>
-        public bool IsAuthenticated
-        {
-            get { return !string.IsNullOrEmpty(UserName); }
-        }
+        public bool IsAuthenticated { get { return CallContext.Identity.Identity.IsAuthenticated; } }
 
         public bool Authorized(params Permission[] permissions)
         {

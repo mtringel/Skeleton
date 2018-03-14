@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -226,6 +227,84 @@ namespace TopTal.JoggingApp.AzureHelper.Graph
             Console.WriteLine("");
 
             return await response.Content.ReadAsStringAsync();
-        } 
+        }
+
+#if DEBUG
+        public async Task<string> GraphTest()
+        {
+            try
+            {
+                // The ClientCredential is where you pass in your client_id and client_secret, which are 
+                // provided to Azure AD in order to receive an access_token using the app's identity.
+                var credential = new Microsoft.Identity.Client.ClientCredential(AppConfig.AzureAdOptions.ClientSecret);
+
+                var cca = new Microsoft.Identity.Client.ConfidentialClientApplication(
+                    AppConfig.AzureAdOptions.ClientId,
+                    "https://login.microsoftonline.com/nekosoftbtgmail.onmicrosoft.com",
+                    $"{AppConfig.WebApplication.BaseUrl.TrimEnd('/')}/{AppConfig.AzureAdOptions.CallbackPath.TrimStart('/')}",
+                    credential,
+                    null,
+                    null);
+
+                var scopes =
+                    "email User.Read User.ReadBasic.All Mail.Send"
+                    .Split(' ')
+                    .Select(t => ("https://graph.microsoft.com/" + t).ToLower())
+                    .ToArray();
+
+                var result = cca.AcquireTokenForClientAsync(new[] { "https://graph.microsoft.com/.default" }).Result;
+                //var result = cca.AcquireTokenForClientAsync(scopes).Result; does not work(?)
+
+                var graphClient = new Microsoft.Graph.GraphServiceClient(new Microsoft.Graph.DelegateAuthenticationProvider(
+                    async requestMessage =>
+                    {
+                        // Passing tenant ID to the sample auth provider to use as a cache key
+                        //var accessToken = await _authProvider.GetUserAccessTokenAsync(userId);
+
+                        // Append the access token to the request
+                        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+
+                        // This header identifies the sample in the Microsoft Graph service. If extracting this code for your project please remove.
+                        //requestMessage.Headers.Add("SampleID", "aspnetcore-connect-sample");
+                    }));
+
+
+                var userId = "d97257fc-15e8-4f06-8384-988e055f72ca";
+
+                try
+                {
+                    // Load user profile.
+                    var users = await graphClient.Users.Request().GetAsync();
+                    //var user = await graphClient.Users[userId].Request().GetAsync(); does not work(?)
+
+                    return JsonConvert.SerializeObject(users, Formatting.Indented);
+                }
+                catch (Microsoft.Graph.ServiceException e)
+                {
+                    switch (e.Error.Code)
+                    {
+                        case "Request_ResourceNotFound":
+                        case "ResourceNotFound":
+                        case "ErrorItemNotFound":
+                        case "itemNotFound":
+                            return JsonConvert.SerializeObject(new { Message = $"User '{userId}' was not found." }, Formatting.Indented);
+                        case "ErrorInvalidUser":
+                            return JsonConvert.SerializeObject(new { Message = $"The requested user '{userId}' is invalid." }, Formatting.Indented);
+                        case "AuthenticationFailure":
+                            return JsonConvert.SerializeObject(new { e.Error.Message }, Formatting.Indented);
+                        case "TokenNotFound":
+                            //await httpContext.ChallengeAsync();
+                            return JsonConvert.SerializeObject(new { e.Error.Message }, Formatting.Indented);
+                        default:
+                            return JsonConvert.SerializeObject(new { Message = "An unknown error has occured." }, Formatting.Indented);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+#endif
     }
 }
